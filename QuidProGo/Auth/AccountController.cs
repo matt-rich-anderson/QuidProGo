@@ -77,8 +77,10 @@ namespace QuidProGo.Auth
 
             var newUserProfile = new UserProfile
             {
+                Name = registration.Name,
                 Email = fbUser.Email,
                 FirebaseUserId = fbUser.FirebaseUserId,
+                UserTypeId = 2
             };
             _userProfileRepository.Add(newUserProfile);
 

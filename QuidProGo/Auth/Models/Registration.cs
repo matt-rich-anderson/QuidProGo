@@ -6,6 +6,9 @@ namespace QuidProGo.Auth.Models
     public class Registration
     {
         [Required]
+        public string Name { get; set; }
+
+        [Required]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
@@ -16,5 +19,10 @@ namespace QuidProGo.Auth.Models
         [Compare(nameof(Password))]
         [DisplayName("Confirm Password")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        public int UserTypeId { get; set; }
+
+
     }
 }

@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using QuidProGo.Auth;
+using QuidProGo.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +29,7 @@ namespace QuidProGo
         {
             services.AddHttpClient();
             services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
-            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<Repositories.IUserProfileRepository, UserProfileRepository>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
@@ -50,8 +54,8 @@ namespace QuidProGo
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
