@@ -96,5 +96,46 @@ namespace QuidProGo.Repositories
                 }
             }
         }
+        public List<Consultation> GetConsultationsByClientId(int clientId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Id, Title, [Description], ClientUserId, AttorneyUserId, CreateDateTime
+                        FROM Consultation
+                        WHERE ClientUserId = @clientId
+                    ";
+
+                    cmd.Parameters.AddWithValue("@clientId", clientId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        List<Consultation> consultations = new List<Consultation>();
+
+                        while (reader.Read())
+                        {
+                            Consultation consultation = new Consultation()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Description = reader.GetString(reader.GetOrdinal("Description")),
+                                ClientUserId = reader.GetInt32(reader.GetOrdinal("ClientUserId")),
+                                AttorneyUserId = reader.GetInt32(reader.GetOrdinal("AttorneyUserId")),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
+                            };
+
+                            consultations.Add(consultation);
+                        }
+
+                        return consultations;
+                    }
+                }
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuidProGo.Models;
 using QuidProGo.Repositories;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace QuidProGo.Controllers
 {
@@ -21,7 +22,9 @@ namespace QuidProGo.Controllers
         // GET: ConsultationController
         public ActionResult Index()
         {
-            List<Consultation> consultations = _consultationRepo.GetAllConsultations();
+            int ownerId = GetCurrentUserId();
+
+            List<Consultation> consultations = _consultationRepo.GetConsultationsByClientId(ownerId);
 
             return View(consultations);
         }
@@ -93,6 +96,11 @@ namespace QuidProGo.Controllers
             {
                 return View();
             }
+        }
+        private int GetCurrentUserId()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.Parse(id);
         }
     }
 }
