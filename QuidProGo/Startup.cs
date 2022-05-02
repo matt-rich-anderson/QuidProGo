@@ -29,7 +29,8 @@ namespace QuidProGo
         {
             services.AddHttpClient();
             services.AddTransient<IFirebaseAuthService, FirebaseAuthService>();
-            services.AddTransient<Repositories.IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<IConsultationRepository, ConsultationRepository>();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
