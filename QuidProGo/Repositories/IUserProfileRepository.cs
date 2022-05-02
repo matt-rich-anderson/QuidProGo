@@ -11,5 +11,6 @@ namespace QuidProGo.Repositories
         void Add(UserProfile userProfile);
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         UserProfile GetById(int id);
+        List<UserProfile> GetUserProfileByUserTypeId(int userTypeId);
     }
 }

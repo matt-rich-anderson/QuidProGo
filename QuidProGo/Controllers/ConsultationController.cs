@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QuidProGo.Models;
+using QuidProGo.Models.ViewModels;
 using QuidProGo.Repositories;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -11,13 +12,15 @@ namespace QuidProGo.Controllers
     public class ConsultationController : Controller
     {
         private readonly IConsultationRepository _consultationRepo;
+        private readonly ICategoryRepository _categoryRepo;
+        private readonly IUserProfileRepository _userProfileRepo;
 
-        public ConsultationController(IConsultationRepository consultationRepository)
+        public ConsultationController(IConsultationRepository consultationRepository, ICategoryRepository categoryRepository, IUserProfileRepository userProfileRepository)
         {
             _consultationRepo = consultationRepository;
+            _categoryRepo = categoryRepository;
+            _userProfileRepo = userProfileRepository;
         }
-
-
 
         // GET: ConsultationController
         public ActionResult Index()
@@ -38,7 +41,16 @@ namespace QuidProGo.Controllers
         // GET: ConsultationController/Create
         public ActionResult Create()
         {
-            return View();
+            List<UserProfile> attorneys = _userProfileRepo.GetUserProfileByUserTypeId(1);
+            List<Category> categories = _categoryRepo.GetAllCategorys();
+
+            ConsultationCreateViewModel viewModel = new ConsultationCreateViewModel
+            {
+                AttorneyList = attorneys,
+                CategoryList = categories
+            };
+
+            return View(viewModel);
         }
 
         // POST: ConsultationController/Create
