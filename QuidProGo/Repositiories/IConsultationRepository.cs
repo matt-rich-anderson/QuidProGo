@@ -7,8 +7,8 @@ namespace QuidProGo.Repositories
     public interface IConsultationRepository
     {
         SqlConnection Connection { get; }
-
         List<Consultation> GetAllConsultations();
         Consultation GetConsultationById(int id);
+        List<Consultation> GetConsultationsByClientId(int clientId);
     }
 }
