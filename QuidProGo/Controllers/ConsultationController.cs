@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using QuidProGo.Models;
 using QuidProGo.Repositories;
+using System.Collections.Generic;
 
 namespace QuidProGo.Controllers
 {
 
     public class ConsultationController : Controller
     {
-        private readonly IConsultationRepository _walkerRepo;
+        private readonly IConsultationRepository _consultationRepo;
 
-        public ConsultationController(IConsultationRepository walkerRepository)
+        public ConsultationController(IConsultationRepository consultationRepository)
         {
-            _walkerRepo = walkerRepository;
+            _consultationRepo = consultationRepository;
         }
 
 
@@ -19,7 +21,9 @@ namespace QuidProGo.Controllers
         // GET: ConsultationController
         public ActionResult Index()
         {
-            return View();
+            List<Consultation> consultations = _consultationRepo.GetAllConsultations();
+
+            return View(consultations);
         }
 
         // GET: ConsultationController/Details/5
