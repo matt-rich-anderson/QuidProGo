@@ -10,5 +10,6 @@ namespace QuidProGo.Repositories
         List<Consultation> GetAllConsultations();
         Consultation GetConsultationById(int id);
         List<Consultation> GetConsultationsByClientId(int clientId);
+        void AddConsultation(Consultation consultation);
     }
 }

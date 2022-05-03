@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace QuidProGo.Models
@@ -21,5 +22,7 @@ namespace QuidProGo.Models
         
         [DataType(DataType.Date)]
         public DateTime? CreateDateTime { get; set; }
+
+        public List<Category> Categories { get; set; }
     }
 }

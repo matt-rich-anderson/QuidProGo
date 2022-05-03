@@ -4,9 +4,10 @@ namespace QuidProGo.Models.ViewModels
 {
     public class ConsultationCreateViewModel
     {
-        public Consultation Consultation { get; set; }
-        public List<UserProfile> AttorneyList { get; set; }
-        public List<Category> CategoryList { get; set; }
+        public Consultation Consultation { get; set; }        
+        public List<UserProfile> AttorneyOptions { get; set; }
+        public List<Category> CategoryOptions { get; set; }
+        public List<int> SelectedCategoryIds { get; set; }
 
     }
 }

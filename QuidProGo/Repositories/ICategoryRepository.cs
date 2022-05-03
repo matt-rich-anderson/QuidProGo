@@ -9,5 +9,6 @@ namespace QuidProGo.Repositories
         SqlConnection Connection { get; }
 
         List<Category> GetAllCategorys();
+        void AddConsultationCatagory(int consultationId, int categoryId);
     }
 }

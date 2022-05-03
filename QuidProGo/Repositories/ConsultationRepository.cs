@@ -137,5 +137,30 @@ namespace QuidProGo.Repositories
                 }
             }
         }
+        public void AddConsultation(Consultation consultation)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    INSERT INTO Consultation (Title, Description, ClientUserId, AttorneyUserId, CreateDateTime)
+                    OUTPUT INSERTED.ID
+                    VALUES (@title, @description, @clientUserId, @attorneyUserId, @createDateTime);
+                ";
+
+                    cmd.Parameters.AddWithValue("@title", consultation.Title);
+                    cmd.Parameters.AddWithValue("@description", consultation.Description);
+                    cmd.Parameters.AddWithValue("@clientUserId", consultation.ClientUserId);
+                    cmd.Parameters.AddWithValue("@attorneyUserId", consultation.AttorneyUserId);
+                    cmd.Parameters.AddWithValue("@createDateTime", consultation.CreateDateTime);
+
+                    int id = (int)cmd.ExecuteScalar();
+
+                    consultation.Id = id;
+                }
+            }
+        }
     }
 }

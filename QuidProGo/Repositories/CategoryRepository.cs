@@ -53,5 +53,25 @@ namespace QuidProGo.Repositories
                 }
             }
         }
+        public void AddConsultationCatagory(int consultationId, int categoryId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    INSERT INTO ConsultationCategory (ConsultationId, CategoryId)
+                    OUTPUT INSERTED.ID
+                    VALUES (@consultationId, @categoryId);
+                ";
+
+                    cmd.Parameters.AddWithValue("@consultationId", consultationId);
+                    cmd.Parameters.AddWithValue("@categoryId", categoryId);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
