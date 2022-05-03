@@ -36,19 +36,19 @@ namespace QuidProGo.Repositories
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        List<Category> consultations = new List<Category>();
+                        List<Category> categories = new List<Category>();
                         while (reader.Read())
                         {
-                            Category consultation = new Category
+                            Category category = new Category
                             {
                                 Id = reader.GetInt32(reader.GetOrdinal("Id")),
                                 CategoryName = reader.GetString(reader.GetOrdinal("CatergoryName")),
                             };
 
-                            consultations.Add(consultation);
+                            categories.Add(category);
                         }
 
-                        return consultations;
+                        return categories;
                     }
                 }
             }
@@ -70,6 +70,41 @@ namespace QuidProGo.Repositories
                     cmd.Parameters.AddWithValue("@categoryId", categoryId);
 
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public List<Category> GetCategByConsultId(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT CategoryId, Category AS CategoryName
+                        FROM ConsultationCategory cc
+                        JOIN Category cat ON cc.CategoryId = cat.Id
+                        WHERE cc.ConsultationId = @id 
+                    ";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<Category> categories = new List<Category>();
+                        while (reader.Read())
+                        {
+                            Category category = new Category
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("CategoryId")),
+                                CategoryName = reader.GetString(reader.GetOrdinal("CategoryName")),
+                            };
+
+                            categories.Add(category);
+                        }
+
+                        return categories;
+                    }
                 }
             }
         }

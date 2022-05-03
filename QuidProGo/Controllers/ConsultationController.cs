@@ -35,7 +35,11 @@ namespace QuidProGo.Controllers
 
         public ActionResult Details(int id)
         {
-            return View();
+            Consultation consultation = _consultationRepo.GetConsultationById(id);
+            consultation.Categories = _categoryRepo.GetCategByConsultId(id);
+            consultation.Attorney = _userProfileRepo.GetAttorByConsultId(id);
+
+            return View(consultation);
         }
 
         public ActionResult Create()

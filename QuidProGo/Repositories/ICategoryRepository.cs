@@ -10,5 +10,6 @@ namespace QuidProGo.Repositories
 
         List<Category> GetAllCategorys();
         void AddConsultationCatagory(int consultationId, int categoryId);
+        List<Category> GetCategByConsultId(int id);
     }
 }
