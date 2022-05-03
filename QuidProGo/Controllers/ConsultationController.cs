@@ -60,7 +60,6 @@ namespace QuidProGo.Controllers
         {
             try
             {
-                throw new Exception();
                 viewModel.Consultation.ClientUserId = GetCurrentUserId();
                 viewModel.Consultation.CreateDateTime = DateAndTime.Now;
                 _consultationRepo.AddConsultation(viewModel.Consultation);
