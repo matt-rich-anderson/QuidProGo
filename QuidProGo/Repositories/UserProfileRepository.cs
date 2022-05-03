@@ -119,5 +119,44 @@ namespace QuidProGo.Repositories
             }
         }
 
+        public List<UserProfile> GetUserProfileByUserTypeId(int userTypeId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Id, Name, Email
+                        FROM UserProfile
+                        WHERE UserTypeId = @userTypeId
+                    ";
+
+                    cmd.Parameters.AddWithValue("@userTypeId", userTypeId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        List<UserProfile> userProfiles = new List<UserProfile>();
+
+                        while (reader.Read())
+                        {
+                            UserProfile userProfile = new UserProfile()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                            };
+
+                            userProfiles.Add(userProfile);
+                        }
+
+                        return userProfiles;
+                    }
+                }
+            }
+
+        }
     }
 }

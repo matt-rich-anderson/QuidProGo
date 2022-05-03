@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using QuidProGo.Models;
+using QuidProGo.Models.ViewModels;
 using QuidProGo.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
@@ -11,15 +14,16 @@ namespace QuidProGo.Controllers
     public class ConsultationController : Controller
     {
         private readonly IConsultationRepository _consultationRepo;
+        private readonly ICategoryRepository _categoryRepo;
+        private readonly IUserProfileRepository _userProfileRepo;
 
-        public ConsultationController(IConsultationRepository consultationRepository)
+        public ConsultationController(IConsultationRepository consultationRepository, ICategoryRepository categoryRepository, IUserProfileRepository userProfileRepository)
         {
             _consultationRepo = consultationRepository;
+            _categoryRepo = categoryRepository;
+            _userProfileRepo = userProfileRepository;
         }
 
-
-
-        // GET: ConsultationController
         public ActionResult Index()
         {
             int ownerId = GetCurrentUserId();
@@ -29,40 +33,60 @@ namespace QuidProGo.Controllers
             return View(consultations);
         }
 
-        // GET: ConsultationController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: ConsultationController/Create
         public ActionResult Create()
         {
-            return View();
+            List<UserProfile> attorneys = _userProfileRepo.GetUserProfileByUserTypeId(1);
+            List<Category> categories = _categoryRepo.GetAllCategorys();
+
+
+            ConsultationCreateViewModel viewModel = new ConsultationCreateViewModel
+            {
+                AttorneyOptions = attorneys,
+                CategoryOptions = categories,
+                SelectedCategoryIds = new List<int>()
+            };
+
+            return View(viewModel);
         }
 
-        // POST: ConsultationController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(ConsultationCreateViewModel viewModel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                viewModel.Consultation.ClientUserId = GetCurrentUserId();
+                viewModel.Consultation.CreateDateTime = DateAndTime.Now;
+                _consultationRepo.AddConsultation(viewModel.Consultation);
+
+                foreach (int categoryId in viewModel.SelectedCategoryIds)
+                {
+                    _categoryRepo.AddConsultationCatagory(viewModel.Consultation.Id, categoryId);
+                }
+
+                return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                List<UserProfile> attorneys = _userProfileRepo.GetUserProfileByUserTypeId(1);
+                List<Category> categories = _categoryRepo.GetAllCategorys();
+                viewModel.AttorneyOptions = attorneys;
+                viewModel.CategoryOptions = categories;
+                
+                return View(viewModel);
             }
         }
 
-        // GET: ConsultationController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: ConsultationController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -77,13 +101,11 @@ namespace QuidProGo.Controllers
             }
         }
 
-        // GET: ConsultationController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: ConsultationController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
