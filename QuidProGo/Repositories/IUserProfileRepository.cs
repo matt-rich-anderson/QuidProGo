@@ -12,5 +12,6 @@ namespace QuidProGo.Repositories
         UserProfile GetByFirebaseUserId(string firebaseUserId);
         UserProfile GetById(int id);
         List<UserProfile> GetUserProfileByUserTypeId(int userTypeId);
+        UserProfile GetAttorByConsultId(int id);
     }
 }

@@ -158,5 +158,45 @@ namespace QuidProGo.Repositories
             }
 
         }
+        public UserProfile GetAttorByConsultId(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT c.AttorneyUserId, Name, Email, UserTypeId
+                        FROM Consultation c
+                        JOIN UserProfile up ON c.AttorneyUserId = up.Id
+                        WHERE c.Id = @id
+                    ";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            UserProfile attorney = new UserProfile
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("AttorneyUserId")),
+                                Name = reader.GetString(reader.GetOrdinal("Name")),
+                                Email = reader.GetString(reader.GetOrdinal("Email")),
+                                UserTypeId = reader.GetInt32(reader.GetOrdinal("UserTypeId")),
+                            };
+
+                            return attorney;
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }

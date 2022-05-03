@@ -19,7 +19,8 @@ namespace QuidProGo.Models
         
         [Required]
         public int AttorneyUserId { get; set; }
-        
+        public UserProfile Attorney { get; set; }
+
         [DataType(DataType.Date)]
         public DateTime? CreateDateTime { get; set; }
 
