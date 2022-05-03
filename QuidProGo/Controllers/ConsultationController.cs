@@ -107,7 +107,9 @@ namespace QuidProGo.Controllers
 
         public ActionResult Delete(int id)
         {
-            return View();
+            Consultation consultation = _consultationRepo.GetConsultationById(id);
+
+            return View(consultation);
         }
 
         [HttpPost]
