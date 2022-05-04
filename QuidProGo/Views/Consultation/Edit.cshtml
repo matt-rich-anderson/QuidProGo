@@ -1,0 +1,75 @@
+﻿@model QuidProGo.Models.ViewModels.ConsultationEditViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+
+<h3>Edit Consultation "@Model.Consultation.Title"</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            
+            <div class="form-group">
+                <label asp-for="Consultation.Id" class="control-label"></label>
+                <input type="hidden" asp-for="Consultation.Id" class="form-control" />
+                <span asp-validation-for="Consultation.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.ClientUserId" class="control-label"></label>
+                <input type="hidden" asp-for="Consultation.ClientUserId" class="form-control" />
+                <span asp-validation-for="Consultation.ClientUserId" class="text-danger"></span>
+            </div>
+            
+            
+            <div class="form-group">
+                <label asp-for="Consultation.Title" class="control-label"></label>
+                <input asp-for="Consultation.Title" class="form-control" />
+                <span asp-validation-for="Consultation.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.Description" class="control-label"></label>
+                <input asp-for="Consultation.Description" class="form-control" />
+                <span asp-validation-for="Consultation.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.AttorneyUserId" class="control-label"></label>
+                <input asp-for="Consultation.AttorneyUserId" class="form-control" />
+                <span asp-validation-for="Consultation.AttorneyUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Consultation.CreateDateTime" class="control-label"></label>
+                <input asp-for="Consultation.CreateDateTime" class="form-control" />
+                <span asp-validation-for="Consultation.CreateDateTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Consultation.AttorneyUserId" class="control-label"></label>
+                <select asp-for="Consultation.AttorneyUserId" class="form-control">
+                    <option>Please Select an Attorney...</option>
+                    @foreach (var attorney in Model.AttorneyOptions)
+                    {
+                        <option value="@attorney.Id">@attorney.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="Consultation.AttorneyUserId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

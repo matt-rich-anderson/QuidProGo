@@ -87,8 +87,15 @@ namespace QuidProGo.Controllers
         }
 
         public ActionResult Edit(int id)
-        {
-            return View();
+        {   
+
+            ConsultationEditViewModel viewModel = new ConsultationEditViewModel
+            {
+                Consultation = _consultationRepo.GetConsultationById(id),
+                AttorneyOptions = _userProfileRepo.GetUserProfileByUserTypeId(1),
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -108,6 +115,7 @@ namespace QuidProGo.Controllers
         public ActionResult Delete(int id)
         {
             Consultation consultation = _consultationRepo.GetConsultationById(id);
+            consultation.Attorney = _userProfileRepo.GetAttorByConsultId(id);
 
             return View(consultation);
         }
