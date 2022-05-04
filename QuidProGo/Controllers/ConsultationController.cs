@@ -45,7 +45,7 @@ namespace QuidProGo.Controllers
         public ActionResult Create()
         {
             List<UserProfile> attorneys = _userProfileRepo.GetUserProfileByUserTypeId(1);
-            List<Category> categories = _categoryRepo.GetAllCategorys();
+            List<Category> categories = _categoryRepo.GetAllCategories();
 
 
             ConsultationCreateViewModel viewModel = new ConsultationCreateViewModel
@@ -78,7 +78,7 @@ namespace QuidProGo.Controllers
             catch (Exception ex)
             {
                 List<UserProfile> attorneys = _userProfileRepo.GetUserProfileByUserTypeId(1);
-                List<Category> categories = _categoryRepo.GetAllCategorys();
+                List<Category> categories = _categoryRepo.GetAllCategories();
                 viewModel.AttorneyOptions = attorneys;
                 viewModel.CategoryOptions = categories;
                 
@@ -87,12 +87,14 @@ namespace QuidProGo.Controllers
         }
 
         public ActionResult Edit(int id)
-        {   
+        {
 
             ConsultationEditViewModel viewModel = new ConsultationEditViewModel
             {
                 Consultation = _consultationRepo.GetConsultationById(id),
                 AttorneyOptions = _userProfileRepo.GetUserProfileByUserTypeId(1),
+                CategoryOptions = _categoryRepo.GetAllCategories(),
+                SelectedCategoryIds = _categoryRepo.GetCCIdsByConsultId(id),
             };
 
             return View(viewModel);
@@ -100,17 +102,24 @@ namespace QuidProGo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, ConsultationCreateViewModel viewModel)
+        public ActionResult Edit(int id, ConsultationEditViewModel viewModel)
         {
             try
             {
-
+                viewModel.Consultation.CreateDateTime = DateAndTime.Now;
                 _consultationRepo.UpdateConsutation(viewModel.Consultation);
+
+                foreach (int categoryId in viewModel.SelectedCategoryIds)
+                {
+                    _categoryRepo.AddConsultationCatagory(viewModel.Consultation.Id, categoryId);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
+                viewModel.AttorneyOptions = _userProfileRepo.GetUserProfileByUserTypeId(1);
+                viewModel.CategoryOptions = _categoryRepo.GetAllCategories();
                 return View(viewModel);
             }
         }

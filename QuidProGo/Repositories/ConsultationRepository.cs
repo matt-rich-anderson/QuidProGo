@@ -192,10 +192,10 @@ namespace QuidProGo.Repositories
                                 Description = @description, 
                                 ClientUserId = @clientUserId, 
                                 AttorneyUserId = @attorneyUserId,
-                                CreateDateTime = @createDateTime,
-                            WHERE Id = @id";
-
-                    cmd.Parameters.AddWithValue("@id", consultation.Id);
+                                CreateDateTime = @createDateTime
+                            WHERE Id = @id
+                    ";
+                    cmd.Parameters.AddWithValue("@Id", consultation.Id);
                     cmd.Parameters.AddWithValue("@title", consultation.Title);
                     cmd.Parameters.AddWithValue("@description", consultation.Description);
                     cmd.Parameters.AddWithValue("@clientUserId", consultation.ClientUserId);
