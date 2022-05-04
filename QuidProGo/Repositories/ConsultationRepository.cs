@@ -162,5 +162,21 @@ namespace QuidProGo.Repositories
                 }
             }
         }
+        public void DeleteConsultation(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = 
+                        @"Delete from Post Where Id=@id ";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+        }
     }
 }

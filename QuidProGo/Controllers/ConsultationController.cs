@@ -114,15 +114,16 @@ namespace QuidProGo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Consultation consultation)
         {
             try
             {
+                _consultationRepo.DeleteConsultation(id);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(consultation);
             }
         }
         private int GetCurrentUserId()
