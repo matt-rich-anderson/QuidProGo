@@ -110,5 +110,6 @@ namespace QuidProGo.Repositories
         }
         public void DeleteConsultCateg(int id) { }
 
+
     }
 }

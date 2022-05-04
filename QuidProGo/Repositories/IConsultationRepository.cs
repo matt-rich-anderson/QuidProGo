@@ -12,5 +12,6 @@ namespace QuidProGo.Repositories
         List<Consultation> GetConsultationsByClientId(int clientId);
         void AddConsultation(Consultation consultation);
         void DeleteConsultation(int id);
+        void UpdateConsutation(Consultation consultation);
     }
 }

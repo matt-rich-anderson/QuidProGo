@@ -8,7 +8,7 @@ namespace QuidProGo.Models.ViewModels
         public List<UserProfile> AttorneyOptions { get; set; }
         public List<Category> CategoryOptions { get; set; }
         public List<int> SelectedCategoryIds { get; set; }
-        public List<int> Edited { get; set; }
+        public List<int> EditedCategoryIds { get; set; }
 
     }
 }

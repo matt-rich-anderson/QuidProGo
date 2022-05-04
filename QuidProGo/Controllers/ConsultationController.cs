@@ -100,15 +100,18 @@ namespace QuidProGo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, ConsultationCreateViewModel viewModel)
         {
             try
             {
+
+                _consultationRepo.UpdateConsutation(viewModel.Consultation);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(viewModel);
             }
         }
 

@@ -178,7 +178,7 @@ namespace QuidProGo.Repositories
 
             }
         }
-        public void UpdatePost(Consultation consultation)
+        public void UpdateConsutation(Consultation consultation)
         {
             using (var conn = Connection)
             {
