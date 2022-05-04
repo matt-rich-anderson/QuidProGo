@@ -11,7 +11,7 @@ namespace QuidProGo.Repositories
         List<Category> GetAllCategories();
         void AddConsultationCatagory(int consultationId, int categoryId);
         List<Category> GetCategByConsultId(int id);
-        void DeleteCC(int id);
+        void DeleteCcByConsultId(int id);
         List<int> GetCCIdsByConsultId(int id);
     }
 }

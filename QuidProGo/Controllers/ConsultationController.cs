@@ -109,6 +109,7 @@ namespace QuidProGo.Controllers
                 viewModel.Consultation.CreateDateTime = DateAndTime.Now;
                 _consultationRepo.UpdateConsutation(viewModel.Consultation);
 
+                _categoryRepo.DeleteCcByConsultId(viewModel.Consultation.Id);
                 foreach (int categoryId in viewModel.SelectedCategoryIds)
                 {
                     _categoryRepo.AddConsultationCatagory(viewModel.Consultation.Id, categoryId);

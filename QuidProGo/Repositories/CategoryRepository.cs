@@ -53,6 +53,7 @@ namespace QuidProGo.Repositories
                 }
             }
         }
+        
         public void AddConsultationCatagory(int consultationId, int categoryId)
         {
             using (SqlConnection conn = Connection)
@@ -108,7 +109,8 @@ namespace QuidProGo.Repositories
                 }
             }
         }
-        public void DeleteCC(int id)
+        
+        public void DeleteCcByConsultId(int id)
         {
             using (var conn = Connection)
             {
@@ -116,7 +118,7 @@ namespace QuidProGo.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText =
-                        @"Delete from ConsultationCategory Where Id=@id ";
+                        @"Delete from ConsultationCategory Where ConsultationId=@id ";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
