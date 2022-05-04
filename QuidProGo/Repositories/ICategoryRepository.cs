@@ -8,8 +8,10 @@ namespace QuidProGo.Repositories
     {
         SqlConnection Connection { get; }
 
-        List<Category> GetAllCategorys();
+        List<Category> GetAllCategories();
         void AddConsultationCatagory(int consultationId, int categoryId);
         List<Category> GetCategByConsultId(int id);
+        void DeleteCcByConsultId(int id);
+        List<int> GetCCIdsByConsultId(int id);
     }
 }

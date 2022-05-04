@@ -22,7 +22,7 @@ namespace QuidProGo.Repositories
 
 
 
-        public List<Category> GetAllCategorys()
+        public List<Category> GetAllCategories()
         {
             using (SqlConnection conn = Connection)
             {
@@ -53,6 +53,7 @@ namespace QuidProGo.Repositories
                 }
             }
         }
+        
         public void AddConsultationCatagory(int consultationId, int categoryId)
         {
             using (SqlConnection conn = Connection)
@@ -108,5 +109,53 @@ namespace QuidProGo.Repositories
                 }
             }
         }
+        
+        public void DeleteCcByConsultId(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText =
+                        @"Delete from ConsultationCategory Where ConsultationId=@id ";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+        }
+
+        public List<int> GetCCIdsByConsultId(int id)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT CategoryId
+                        FROM ConsultationCategory cc
+                        WHERE cc.ConsultationId = @id 
+                    ";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        List<int> selectedIds = new List<int>();
+                        
+                        while (reader.Read())
+                        {
+                            int readId = reader.GetInt32(reader.GetOrdinal("CategoryId"));
+                            selectedIds.Add(readId);
+                        }
+
+                        return selectedIds;
+                    }
+                }
+            }
+        }
+
     }
 }

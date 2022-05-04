@@ -162,5 +162,51 @@ namespace QuidProGo.Repositories
                 }
             }
         }
+        public void DeleteConsultation(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = 
+                        @"Delete from Consultation Where Id=@id ";
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+        }
+        public void UpdateConsutation(Consultation consultation)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            UPDATE Consultation
+                            SET 
+                                Title = @title, 
+                                Description = @description, 
+                                ClientUserId = @clientUserId, 
+                                AttorneyUserId = @attorneyUserId,
+                                CreateDateTime = @createDateTime
+                            WHERE Id = @id
+                    ";
+                    cmd.Parameters.AddWithValue("@Id", consultation.Id);
+                    cmd.Parameters.AddWithValue("@title", consultation.Title);
+                    cmd.Parameters.AddWithValue("@description", consultation.Description);
+                    cmd.Parameters.AddWithValue("@clientUserId", consultation.ClientUserId);
+                    cmd.Parameters.AddWithValue("@attorneyUserId", consultation.AttorneyUserId);
+                    cmd.Parameters.AddWithValue("@createDateTime", consultation.CreateDateTime);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+            }
+
+        }
     }
 }
