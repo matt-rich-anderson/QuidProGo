@@ -110,9 +110,13 @@ namespace QuidProGo.Controllers
                 _consultationRepo.UpdateConsutation(viewModel.Consultation);
 
                 _categoryRepo.DeleteCcByConsultId(viewModel.Consultation.Id);
-                foreach (int categoryId in viewModel.SelectedCategoryIds)
-                {
-                    _categoryRepo.AddConsultationCatagory(viewModel.Consultation.Id, categoryId);
+
+                if (viewModel.SelectedCategoryIds != null) 
+                { 
+                    foreach (int categoryId in viewModel.SelectedCategoryIds)
+                    {
+                        _categoryRepo.AddConsultationCatagory(viewModel.Consultation.Id, categoryId);
+                    }                    
                 }
 
                 return RedirectToAction(nameof(Index));
