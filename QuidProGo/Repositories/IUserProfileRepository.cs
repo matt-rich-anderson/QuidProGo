@@ -13,5 +13,6 @@ namespace QuidProGo.Repositories
         UserProfile GetById(int id);
         List<UserProfile> GetUserProfileByUserTypeId(int userTypeId);
         UserProfile GetAttorByConsultId(int id);
+        List<UserType> GetAllUserTypes();
     }
 }
