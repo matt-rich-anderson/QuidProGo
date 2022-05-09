@@ -8,6 +8,7 @@ using QuidProGo.Auth.Models;
 using QuidProGo.Repositories;
 using QuidProGo.Models;
 using Microsoft.Extensions.Configuration;
+using QuidProGo.Auth.Models.ViewModels;
 
 namespace QuidProGo.Auth
 {
@@ -56,7 +57,11 @@ namespace QuidProGo.Auth
 
         public IActionResult Register()
         {
-            return View();
+            RegistrationViewModel regVM = new RegistrationViewModel()
+            {
+                UserTypeOptions = _userProfileRepository.GetAllUserTypes()
+            };
+            return View(regVM);
         }
 
         [HttpPost]
@@ -80,7 +85,7 @@ namespace QuidProGo.Auth
                 Name = registration.Name,
                 Email = fbUser.Email,
                 FirebaseUserId = fbUser.FirebaseUserId,
-                UserTypeId = 2
+                UserTypeId = registration.UserTypeId
             };
             _userProfileRepository.Add(newUserProfile);
 

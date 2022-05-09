@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using QuidProGo.Models;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace QuidProGo.Auth.Models
@@ -21,7 +23,10 @@ namespace QuidProGo.Auth.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
+        [DisplayName("I will be using this Quid Pro GO as...")]
         public int UserTypeId { get; set; }
+
+        public List<UserType> UserTypeOptions { get; set; }
 
 
     }

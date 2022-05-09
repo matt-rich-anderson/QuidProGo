@@ -1,4 +1,4 @@
-﻿@model QuidProGo.Auth.Models.Registration
+﻿@model QuidProGo.Auth.Models.ViewModels.RegistrationViewModel
 
 @{
     ViewData["Title"] = "Register";
@@ -12,25 +12,37 @@
         <form asp-action="Register">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Registration.Name" class="control-label"></label>
+                <input asp-for="Registration.Name" class="form-control" />
+                <span asp-validation-for="Registration.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+                <label asp-for="Registration.Email" class="control-label"></label>
+                <input asp-for="Registration.Email" class="form-control" />
+                <span asp-validation-for="Registration.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" type="password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="Registration.Password" class="control-label"></label>
+                <input asp-for="Registration.Password" type="password" class="form-control" />
+                <span asp-validation-for="Registration.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" type="password" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <label asp-for="Registration.ConfirmPassword" class="control-label"></label>
+                <input asp-for="Registration.ConfirmPassword" type="password" class="form-control" />
+                <span asp-validation-for="Registration.ConfirmPassword" class="text-danger"></span>
             </div>
+
+            <div class="form-group">
+                <label asp-for="Registration.UserTypeId" class="control-label"></label>
+                <select asp-for="Registration.UserTypeId" class="form-control">
+                    @foreach (var uto in Model.UserTypeOptions)
+                    {
+                        <option value="@uto.Id">@uto.UserTypeName</option>
+                    }
+                </select>
+                <span asp-validation-for="Registration.UserTypeId" class="text-danger"></span>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Register" class="btn btn-primary" />
             </div>
