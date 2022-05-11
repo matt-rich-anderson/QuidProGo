@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace QuidProGo.Models
@@ -25,6 +26,7 @@ namespace QuidProGo.Models
         public UserProfile Attorney { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayName("Date Created")]
         public DateTime? CreateDateTime { get; set; }
 
         public List<Category> Categories { get; set; }

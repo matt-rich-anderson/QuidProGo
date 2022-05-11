@@ -52,19 +52,8 @@ namespace QuidProGo.Auth
 
             await LoginToApp(userProfile);
 
+            return RedirectToAction("Index", "Home");
 
-
-            int userId = GetCurrentUserId();
-            UserProfile currentUser = _userProfileRepository.GetById(userId);
-
-            if (currentUser.UserTypeId == 1)
-            {
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Attorney");
-            }
         }
 
         public IActionResult Register()

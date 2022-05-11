@@ -159,7 +159,7 @@ namespace QuidProGo.Repositories
                         FROM Consultation c
                         JOIN UserProfile upc ON c.ClientUserId = upc.Id
                         JOIN UserProfile upa ON c.AttorneyUserId = upa.Id
-                        WHERE c.ClientUserId = @clientId
+                        WHERE c.AttorneyUserId = @attorneyId
                     ";
 
                     cmd.Parameters.AddWithValue("@attorneyId", attorneyId);
