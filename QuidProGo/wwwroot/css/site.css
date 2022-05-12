@@ -95,6 +95,10 @@ ul {
     padding: 0px;
 }
 
+.welcome_gfx {
+    margin: 50px
+}
+
 .footer {
     position: absolute;
     bottom: 0;
