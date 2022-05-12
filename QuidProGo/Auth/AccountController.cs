@@ -53,6 +53,7 @@ namespace QuidProGo.Auth
             await LoginToApp(userProfile);
 
             return RedirectToAction("Index", "Home");
+
         }
 
         public IActionResult Register()
@@ -114,6 +115,11 @@ namespace QuidProGo.Auth
             await HttpContext.SignInAsync(
                 CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity));
+        }
+        private int GetCurrentUserId()
+        {
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return int.Parse(id);
         }
     }
 }

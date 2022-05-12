@@ -6,12 +6,15 @@
     <title>@ViewData["Title"] - Quid Pro GO</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3">
             <div class="container">
-                <img src="https://res.cloudinary.com/dtiqyvglg/image/upload/v1651708470/Quid%20Pro%20Go/QPG_mmajbu.png" alt="Quid Pro GO" height="25">
+                <img class="brand" src="https://res.cloudinary.com/dtiqyvglg/image/upload/v1652298465/Quid%20Pro%20Go/QPG_DarkBG_dzoyvn.png" alt="Quid Pro GO" height="50">
                 @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Quid Pro GO</a>*@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -22,25 +25,25 @@
                        @if (User.Identity.IsAuthenticated)
                        {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
                         </li>
                        }
                        else
                        {
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">Register</a>
                         </li>
                        }
                     </ul>
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Consultation" asp-action="Index">My Consultations</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Consultation" asp-action="Index">My Consultations</a>
                         </li>
                     </ul>
                 </div>
@@ -55,7 +58,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Quid Pro GO - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2022 - Quid Pro GO - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

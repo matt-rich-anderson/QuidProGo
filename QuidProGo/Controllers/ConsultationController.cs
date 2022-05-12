@@ -26,9 +26,9 @@ namespace QuidProGo.Controllers
 
         public ActionResult Index()
         {
-            int ownerId = GetCurrentUserId();
+            int clientId = GetCurrentUserId();
 
-            List<Consultation> consultations = _consultationRepo.GetConsultationsByClientId(ownerId);
+            List<Consultation> consultations = _consultationRepo.GetConsultationsByClientId(clientId);
 
             return View(consultations);
         }

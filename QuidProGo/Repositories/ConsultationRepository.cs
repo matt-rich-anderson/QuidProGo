@@ -29,8 +29,9 @@ namespace QuidProGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, Title, [Description], ClientUserId, AttorneyUserId, CreateDateTime
-                        FROM Consultation
+                        SELECT c.Id AS ConsultId, c.Title, c.Description, ClientUserId, AttorneyUserId, CreateDateTime, Name AS ClientName
+                        FROM Consultation c
+                        JOIN UserProfile up ON c.ClientUserId = up.Id 
                     ";
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -44,6 +45,7 @@ namespace QuidProGo.Repositories
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
                                 Description = reader.GetString(reader.GetOrdinal("Description")),
                                 ClientUserId = reader.GetInt32(reader.GetOrdinal("ClientUserId")),
+                                ClientName = reader.GetString(reader.GetOrdinal("ClientName")),
                                 AttorneyUserId = reader.GetInt32(reader.GetOrdinal("AttorneyUserId")),
                                 CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
                             };
@@ -56,7 +58,6 @@ namespace QuidProGo.Repositories
                 }
             }
         }
-
         public Consultation GetConsultationById(int id)
         {
             using (SqlConnection conn = Connection)
@@ -65,9 +66,10 @@ namespace QuidProGo.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, Title, [Description], ClientUserId, AttorneyUserId, CreateDateTime
-                        FROM Consultation
-                        WHERE Id = @id
+                        SELECT c.Id AS ConsultId, c.Title, c.Description, ClientUserId, AttorneyUserId, CreateDateTime, Name AS ClientName
+                        FROM Consultation c
+                        JOIN UserProfile up ON c.ClientUserId = up.Id 
+                        WHERE c.Id = @id
                     ";
 
                     cmd.Parameters.AddWithValue("@id", id);
@@ -78,10 +80,11 @@ namespace QuidProGo.Repositories
                         {
                             Consultation consultation = new Consultation
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Id = reader.GetInt32(reader.GetOrdinal("ConsultId")),
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
                                 Description = reader.GetString(reader.GetOrdinal("Description")),
                                 ClientUserId = reader.GetInt32(reader.GetOrdinal("ClientUserId")),
+                                ClientName = reader.GetString(reader.GetOrdinal("ClientName")),
                                 AttorneyUserId = reader.GetInt32(reader.GetOrdinal("AttorneyUserId")),
                                 CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
                             };
@@ -126,6 +129,65 @@ namespace QuidProGo.Repositories
                                 Description = reader.GetString(reader.GetOrdinal("Description")),
                                 ClientUserId = reader.GetInt32(reader.GetOrdinal("ClientUserId")),
                                 AttorneyUserId = reader.GetInt32(reader.GetOrdinal("AttorneyUserId")),
+                                CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
+                            };
+
+                            consultations.Add(consultation);
+                        }
+
+                        return consultations;
+                    }
+                }
+            }
+        }
+        public List<Consultation> GetConsultationsByAttorneyId(int attorneyId)
+        {
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT
+                        c.Id, c.Title, c.Description, c.ClientUserId, c.AttorneyUserId, c.CreateDateTime, 
+
+                        upc.Name AS ClientName, upc.Email AS ClientEmail,
+
+                        upa.Name AS AttorneyName, upa.Email AS AttorneyEmail
+
+                        FROM Consultation c
+                        JOIN UserProfile upc ON c.ClientUserId = upc.Id
+                        JOIN UserProfile upa ON c.AttorneyUserId = upa.Id
+                        WHERE c.AttorneyUserId = @attorneyId
+                    ";
+
+                    cmd.Parameters.AddWithValue("@attorneyId", attorneyId);
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        List<Consultation> consultations = new List<Consultation>();
+
+                        while (reader.Read())
+                        {
+                            Consultation consultation = new Consultation()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Description = reader.GetString(reader.GetOrdinal("Description")),
+                                ClientUserId = reader.GetInt32(reader.GetOrdinal("ClientUserId")),
+                                Client = new UserProfile
+                                {
+                                    Name = reader.GetString(reader.GetOrdinal("ClientName")),
+                                    Email = reader.GetString(reader.GetOrdinal("ClientEmail"))
+                                },
+                                AttorneyUserId = reader.GetInt32(reader.GetOrdinal("AttorneyUserId")),
+                                Attorney = new UserProfile
+                                {
+                                    Name = reader.GetString(reader.GetOrdinal("AttorneyName")),
+                                    Email = reader.GetString(reader.GetOrdinal("AttorneyEmail"))
+                                },
                                 CreateDateTime = reader.GetDateTime(reader.GetOrdinal("CreateDateTime"))
                             };
 

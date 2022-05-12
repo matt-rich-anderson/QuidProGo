@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace QuidProGo.Models
@@ -16,14 +17,21 @@ namespace QuidProGo.Models
 
         [Required]
         public int ClientUserId { get; set; }
-        
+
+        public UserProfile Client { get; set; }
+
         [Required]
+        [DisplayName("Selected Attorney")]
         public int AttorneyUserId { get; set; }
+
         public UserProfile Attorney { get; set; }
 
         [DataType(DataType.Date)]
+        [DisplayName("Date Created")]
         public DateTime? CreateDateTime { get; set; }
 
         public List<Category> Categories { get; set; }
+
+        public string ClientName { get; set; }
     }
 }
