@@ -59,13 +59,46 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: 'Montserrat', sans-serif;
 }
+
+h1, h2, h3, h4 {
+    color: #1D427A;
+}
+
+label, th, dt {
+    font-weight: 700;
+    color: #E0BC26;
+}
+
+.blue-button {
+    background-color: #1D427A;
+}
+
+.brand {
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+nav {
+    background-color: #1D427A;
+}
+
+.navCustom {
+    color: white;
+}
+
+ul {
+    padding: 0px;
+}
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }

@@ -80,7 +80,7 @@ namespace QuidProGo.Repositories
                         {
                             Consultation consultation = new Consultation
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Id = reader.GetInt32(reader.GetOrdinal("ConsultId")),
                                 Title = reader.GetString(reader.GetOrdinal("Title")),
                                 Description = reader.GetString(reader.GetOrdinal("Description")),
                                 ClientUserId = reader.GetInt32(reader.GetOrdinal("ClientUserId")),

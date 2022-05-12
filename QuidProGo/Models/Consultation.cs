@@ -21,6 +21,7 @@ namespace QuidProGo.Models
         public UserProfile Client { get; set; }
 
         [Required]
+        [DisplayName("Selected Attorney")]
         public int AttorneyUserId { get; set; }
 
         public UserProfile Attorney { get; set; }
