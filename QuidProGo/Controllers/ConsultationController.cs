@@ -26,12 +26,18 @@ namespace QuidProGo.Controllers
 
         public ActionResult Index()
         {
-            int clientId = GetCurrentUserId();
+            UserProfile userProfile = _userProfileRepo.GetById(GetCurrentUserId());
 
-            List<Consultation> consultations = _consultationRepo.GetConsultationsByClientId(clientId);
-
-            return View(consultations);
-        }
+            if (userProfile.UserTypeId == 1)
+            {
+                return RedirectToAction("Index", "Attorney");
+            }
+            else
+            { 
+                List<Consultation> consultations = _consultationRepo.GetConsultationsByClientId(userProfile.Id);
+                return View(consultations);            
+            }
+}
 
         public ActionResult Details(int id)
         {

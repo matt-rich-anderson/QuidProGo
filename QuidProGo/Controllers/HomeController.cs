@@ -19,16 +19,7 @@ namespace QuidProGo.Controllers
 
         public IActionResult Index()
         {
-            var userProfileId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-            var userProfile = _userProfileRepository.GetById(userProfileId);
-            if (userProfile.UserTypeId == 1)
-            {
-                return RedirectToAction("Index", "Attorney");
-            }
-            else
-            {
-                return View(userProfile);
-            }
+            return View();
         }
 
         public IActionResult Privacy()
